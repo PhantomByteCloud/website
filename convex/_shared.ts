@@ -43,3 +43,22 @@ export async function isAuthenticated(auth: Auth) {
 
   return identity;
 }
+
+/**
+ * Checks if the error is a convex error then gets the message from it.
+ * @param error Any error from a try catch block.
+ * @returns 
+ */
+export function buildTypedErrorMessage (error: unknown): string {
+  const errorMessage =
+				error instanceof IConvexError
+					? (error.data as { message: string }).message
+					: 'Unexpected error occurred';
+
+  return errorMessage;
+}
+
+export type Result = {
+  Ok: boolean;
+  Err?: IConvexError;
+}
